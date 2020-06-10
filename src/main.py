@@ -25,15 +25,12 @@ def main():
 
 	if (args.tolabel):
 		generator.tolabel()
-
 	elif args.dataset is not None and exist(args.dataset):
-
+		
 		if (args.augmentation):
 			generator.augmentation(args.augmentation)
-
 		elif (args.train):
 			nn.train()
-			
 		elif (args.test):
 			nn.test()
 	else:

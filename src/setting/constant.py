@@ -11,10 +11,12 @@ BACKGROUND_COLOR = [255, 120, 110]
 SEGMENTATION_COLOR = [0, 0, 255]
 
 p_VALIDATION = 0.15
-MIN_DELTA = 1e-5
-PATIENCE = 2
+# MIN_DELTA = 1e-5
+MIN_DELTA = 1e-10
+PATIENCE = 5
 ### Monitor: loss, acc, val_loss, val_acc
-MONITOR = "val_loss"
+##my custom monitor is iou
+MONITOR = "iou"
 
 ''' Folder '''
 # > project level

@@ -1,3 +1,5 @@
+import tensorflow as tf
+import keras.backend as K
 from keras.models import Input
 from keras.engine.training import Model
 from keras.layers import Conv2D, MaxPooling2D, Dropout, UpSampling2D, Concatenate
@@ -5,6 +7,20 @@ from keras.optimizers import Adam
 import numpy as np
 
 IMAGE_SIZE = (256,256,1)
+
+@tf.function
+def iou(y_true, y_pred, smooth=1):
+    intersection = K.sum(K.abs(y_true * y_pred), axis=[1, 2, 3])
+    union = K.sum(y_true, [1, 2, 3]) + K.sum(y_pred, [1, 2, 3]) - intersection
+    return K.mean((intersection + smooth) / (union + smooth), axis=0)
+
+
+@tf.function
+def dice(y_true, y_pred, smooth=1):
+    intersection = K.sum(y_true * y_pred, axis=[1, 2, 3])
+    union = K.sum(y_true, axis=[1, 2, 3]) + K.sum(y_pred, axis=[1, 2, 3])
+    return K.mean((2. * intersection + smooth) / (union + smooth), axis=0)
+
 
 def model(weights_input=None):
 
@@ -54,7 +70,7 @@ def model(weights_input=None):
     conv10 = Conv2D(1, 1, activation="sigmoid")(conv9)
 
     model = Model(inputs=inputs, outputs=conv10)
-    model.compile(optimizer=Adam(lr=1e-4), loss="binary_crossentropy", metrics=["accuracy"])
+    model.compile(optimizer=Adam(lr=1e-4), loss="binary_crossentropy", metrics=[iou, dice])
 
     if weights_input:
         model.load_weights(weights_input)

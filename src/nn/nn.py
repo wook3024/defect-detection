@@ -90,8 +90,10 @@ def train():
     patience, patience_early = const.PATIENCE, int(epochs*0.25)
     loop, past_monitor = 0, float('inf')
 
-    checkpoint = ModelCheckpoint(nn.fn_checkpoint, monitor=const.MONITOR, save_best_only=True, verbose=1)
-    early_stopping = EarlyStopping(monitor=const.MONITOR, min_delta=const.MIN_DELTA, patience=patience_early, restore_best_weights=True, verbose=1)
+    checkpoint = ModelCheckpoint(nn.fn_checkpoint, monitor=const.MONITOR, mode='max', save_best_only=True, verbose=1)
+    #previous restore_best_weights is True
+    #monitor에 iou를 넣어서 mode='max'사용
+    early_stopping = EarlyStopping(monitor=const.MONITOR, mode='max', min_delta=const.MIN_DELTA, patience=patience_early, restore_best_weights=True, verbose=1)
     logger = CSVLogger(nn.fn_logger, append=True)
 
     while True:
