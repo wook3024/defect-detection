@@ -16,7 +16,7 @@ MIN_DELTA = 1e-10
 PATIENCE = 5
 ### Monitor: loss, acc, val_loss, val_acc
 ##my custom monitor is iou
-MONITOR = "binary_accuracy"
+MONITOR = "iou"
 
 ''' Folder '''
 # > project level

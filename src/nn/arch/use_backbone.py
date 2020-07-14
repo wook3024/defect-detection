@@ -1,7 +1,23 @@
-from .UNetPlusPlus.segmentation_models import Unet, Nestnet, Xnet
 import numpy as np
+import tensorflow as tf
+import keras.backend as K
+from .UNetPlusPlus.segmentation_models import Unet, Nestnet, Xnet
 
 IMAGE_SIZE = (256,256,3)
+
+@tf.function
+def iou(y_true, y_pred, smooth=1):
+    intersection = K.sum(K.abs(y_true * y_pred), axis=[1, 2, 3])
+    union = K.sum(y_true, [1, 2, 3]) + K.sum(y_pred, [1, 2, 3]) - intersection
+    return K.mean((intersection + smooth) / (union + smooth), axis=0)
+
+
+@tf.function
+def dice(y_true, y_pred, smooth=1):
+    intersection = K.sum(y_true * y_pred, axis=[1, 2, 3])
+    union = K.sum(y_true, axis=[1, 2, 3]) + K.sum(y_pred, axis=[1, 2, 3])
+    return K.mean((2. * intersection + smooth) / (union + smooth), axis=0)
+
 
 def model(weights_input=None):
     # model = Xnet(backbone_name='resnet50', encoder_weights='imagenet', decoder_block_type='transpose') # build UNet++
@@ -10,7 +26,7 @@ def model(weights_input=None):
 
     model.compile('Adam', 'binary_crossentropy', ['binary_accuracy'])
     
-    model.summary()
+    # model.summary()
     # if weights_input:
     #     model.load_weights(weights_input)
 
