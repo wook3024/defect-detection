@@ -27,8 +27,8 @@ def model(weights_input=None):
     model.compile('Adam', 'binary_crossentropy', ['binary_accuracy'])
     
     # model.summary()
-    # if weights_input:
-    #     model.load_weights(weights_input)
+    if weights_input:
+        model.load_weights(weights_input)
 
     return model
 
