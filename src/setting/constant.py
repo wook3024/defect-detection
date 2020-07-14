@@ -1,9 +1,9 @@
 ''' Default '''
-DATASET = "cracktile"
-IMG_PROCESSING = "cracktile"
+DATASET = "membrane"
+IMG_PROCESSING = "simple"
 MODEL = "unet"
 
-IMAGE_SIZE = (256,256,1)
+IMAGE_SIZE = (256,256,3)
 FILTER = "*[0-9].*"
 
 ### Blue, Green, Red
@@ -16,7 +16,7 @@ MIN_DELTA = 1e-10
 PATIENCE = 5
 ### Monitor: loss, acc, val_loss, val_acc
 ##my custom monitor is iou
-MONITOR = "iou"
+MONITOR = "binary_accuracy"
 
 ''' Folder '''
 # > project level

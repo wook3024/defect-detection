@@ -64,6 +64,7 @@ def tolabel():
             file_save = path.join(path_save, file_name)
 
             img_pp, _ = dip.preprocessor(image, None)
+            img_pp = image
             data.imwrite(file_save, img_pp)
     else:
     	print("\n>> Folder not found (%s)\n" % dn_tolabel)

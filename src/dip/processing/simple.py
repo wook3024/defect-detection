@@ -17,9 +17,9 @@ def posprocessor(image):
 
 
 def image_preprocessor(image):
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     return image
     
 def label_preprocessor(label):
-    label = cv2.cvtColor(label, cv2.COLOR_BGR2GRAY)
+    # label = cv2.cvtColor(label, cv2.COLOR_BGR2GRAY)
     return label
