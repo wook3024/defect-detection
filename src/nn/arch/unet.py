@@ -22,7 +22,6 @@ def dice(y_true, y_pred, smooth=1):
     return K.mean((2. * intersection + smooth) / (union + smooth), axis=0)
 
 
-<<<<<<< HEAD
 
 def get_iou_vector(A, B):
     # Numpy version    
@@ -81,8 +80,6 @@ def bce_logdice_loss(y_true, y_pred):
     return binary_crossentropy(y_true, y_pred) - K.log(1. - dice_loss(y_true, y_pred))
 
 
-=======
->>>>>>> a703cd23bf51f3c2805f3fe4b435b1fef35e88b1
 def model(weights_input=None):
 
     inputs = Input(IMAGE_SIZE)
@@ -130,7 +127,6 @@ def model(weights_input=None):
 
     conv10 = Conv2D(1, 1, activation="sigmoid")(conv9)
 
-<<<<<<< HEAD
 
     # strategy = tf.distribute.MirroredStrategy()
 
@@ -139,10 +135,6 @@ def model(weights_input=None):
     model.compile(optimizer=Adam(lr=1e-4), loss="binary_crossentropy", metrics=[iou, dice, 'accuracy'])
 
     # model.summary()
-=======
-    model = Model(inputs=inputs, outputs=conv10)
-    model.compile(optimizer=Adam(lr=1e-4), loss="binary_crossentropy", metrics=[iou, dice])
->>>>>>> a703cd23bf51f3c2805f3fe4b435b1fef35e88b1
 
     if weights_input:
         model.load_weights(weights_input)
