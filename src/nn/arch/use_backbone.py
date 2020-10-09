@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import tensorflow as tf
 import numpy as np
 import keras.backend as K
@@ -5,6 +6,14 @@ from .UNetPlusPlus.segmentation_models import Unet, Nestnet, Xnet
 # from tensorflow.keras.utils import multi_gpu_model
 
 IMAGE_SIZE = (256,256,1)
+=======
+import numpy as np
+import tensorflow as tf
+import keras.backend as K
+from .UNetPlusPlus.segmentation_models import Unet, Nestnet, Xnet
+
+IMAGE_SIZE = (256,256,3)
+>>>>>>> a703cd23bf51f3c2805f3fe4b435b1fef35e88b1
 
 @tf.function
 def iou(y_true, y_pred, smooth=1):
@@ -21,6 +30,7 @@ def dice(y_true, y_pred, smooth=1):
 
 
 def model(weights_input=None):
+<<<<<<< HEAD
     # strategy = tf.distribute.MirroredStrategy()
 
     # model = Xnet(backbone_name='resnet50', encoder_weights='imagenet', decoder_block_type='transpose') # build UNet++
@@ -31,17 +41,32 @@ def model(weights_input=None):
     
     model.summary()
 
+=======
+    # model = Xnet(backbone_name='resnet50', encoder_weights='imagenet', decoder_block_type='transpose') # build UNet++
+    model = Unet(backbone_name='resnet50', input_shape=IMAGE_SIZE, encoder_weights='imagenet', decoder_block_type='transpose') # build U-Net
+    # model = NestNet(backbone_name='resnet50', encoder_weights='imagenet', decoder_block_type='transpose') # build DLA
+
+    model.compile('Adam', 'binary_crossentropy', ['binary_accuracy'])
+    
+>>>>>>> a703cd23bf51f3c2805f3fe4b435b1fef35e88b1
     # model.summary()
     if weights_input:
         model.load_weights(weights_input)
 
+<<<<<<< HEAD
     # parallel_model = multi_gpu_model(model, gpus=2)
+=======
+>>>>>>> a703cd23bf51f3c2805f3fe4b435b1fef35e88b1
     return model
 
 def prepare_input(image):
     image = np.reshape(image, image.shape+(1,))
     image = np.reshape(image,(1,)+image.shape)
+<<<<<<< HEAD
     # image = np.squeeze(image, axis=-1)
+=======
+    image = np.squeeze(image, axis=-1)
+>>>>>>> a703cd23bf51f3c2805f3fe4b435b1fef35e88b1
     image = np.clip(image, 0, 255)
     # print(image.shape)
     return np.divide(image, 255)

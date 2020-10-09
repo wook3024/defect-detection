@@ -132,6 +132,7 @@ def residual_block(blockInput, num_filters=16):
 
 
 
+<<<<<<< HEAD
 def model(weights_input=None):
     input_shape=IMAGE_SIZE
     backbone_size='b0'
@@ -139,6 +140,9 @@ def model(weights_input=None):
     dropout_rate=0.5
 
 
+=======
+def UEfficientNet(input_shape=IMAGE_SIZE, backbone_size='b0', pre_trained_weight='imagenet', dropout_rate=0.1):
+>>>>>>> a703cd23bf51f3c2805f3fe4b435b1fef35e88b1
     if backbone_size == 'b7':
         backbone = efn.EfficientNetB7(weights=pre_trained_weight, include_top=False, input_shape=input_shape)
         backbone_layer = [554, 258, 155, 52]
@@ -210,6 +214,7 @@ def model(weights_input=None):
     uconv0 = Dropout(dropout_rate/2)(uconv0)
     #### bacause shape error, channel 1 -> 3  change ####
     output_layer = Conv2D(3, (1,1), padding="same", activation="sigmoid")(uconv0)    
+<<<<<<< HEAD
 
 
     strategy = tf.distribute.MirroredStrategy()
@@ -218,6 +223,24 @@ def model(weights_input=None):
         model.name = 'u-efficient'
         model.compile(loss='binary_crossentropy', optimizer=Adam(lr=0.0001), metrics=[iou])
 
+=======
+    
+    model = Model(input, output_layer)
+    model.name = 'u-efficient'
+
+    return model
+
+
+def model(weights_input=None):
+    model = UEfficientNet(input_shape=IMAGE_SIZE, backbone_size='b0', pre_trained_weight='imagenet', dropout_rate=0.5)
+
+    opt = tfa.optimizers.SWA(
+        tf.keras.optimizers.SGD(lr=2.0), 10, 3)
+    model.compile(loss='binary_crossentropy', optimizer=Adam(lr=0.0001), metrics=[iou, dice, 'accuracy'])
+
+    # model.summary()
+    
+>>>>>>> a703cd23bf51f3c2805f3fe4b435b1fef35e88b1
     if weights_input:
         #./keras_swa.model
         print("check weights_input ***", weights_input)
@@ -231,8 +254,11 @@ def model(weights_input=None):
     return model
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> a703cd23bf51f3c2805f3fe4b435b1fef35e88b1
 def prepare_input(image):
     image = np.reshape(image, image.shape+(1,))
     image = np.reshape(image,(1,)+image.shape)
