@@ -126,7 +126,6 @@ test*/
 model/
 UNetPlusPlus/
 
-nested+efn.py
 Nest_Net.py
 unet_efficientnet.py
 use_backbone.py
