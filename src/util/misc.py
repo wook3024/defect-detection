@@ -27,7 +27,11 @@ def epochs_and_steps(len_data, len_validation=None):
     else:
         g_divisor = middle_cdr(len_data, len_validation)
 
-    epochs = len_data//g_divisor
+    if len_data < 1000:
+        epochs = 1
+    else :
+        epochs = len_data//g_divisor
+    
     steps_per_epoch = len_data//epochs
     validation_steps = len_validation//epochs
 

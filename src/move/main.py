@@ -3,15 +3,11 @@ import argparse
 from setting import environment, constant
 from util import path, generator
 from nn import nn
-import os
 
 
-# gpus = tf.config.experimental.list_physical_devices('GPU')
-# for gpu in gpus:
-# 	print("Name:", gpu.name, " Type:", gpu.device_type)
-
-os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
-os.environ["CUDA_VISIBLE_DEVICES"]="1"
+gpus = tf.config.experimental.list_physical_devices('GPU')
+for gpu in gpus:
+	print("Name:", gpu.name, " Type:", gpu.device_type)
 
 ### gdown https://drive.google.com/uc?id=0B7EVK8r0v71pOXBhSUdJWU1MYUk
 ### python main.py --dip=example --tolabel
@@ -29,7 +25,7 @@ def main():
 	parser.add_argument("--arch", help="Neural Network architecture", type=str, default=constant.MODEL)
 	parser.add_argument("--dip", help="Method for image processing", type=str, default=constant.IMG_PROCESSING)
 	parser.add_argument("--gpu", help="Enable GPU mode", action="store_true", default=False)
-	parser.add_argument("--count", help="cur_count", type=int, default=9)
+	parser.add_argument("--count", help="cur_count", type=int, default=7)
 	parser.add_argument("--save_folder", help="save_folder", type=str, default=constant.save_folder)
 	args = parser.parse_args()
 

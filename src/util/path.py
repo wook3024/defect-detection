@@ -37,10 +37,13 @@ def data(path="", *paths, mkdir=True):
     return __general__(os.path.join("..", const.dn_DATA), path, paths, mkdir)
 
 def out(path="", *paths, mkdir=True):
-    return __general__(os.path.join("..", const.dn_OUT), path, paths, mkdir)
+    return __general__(os.path.join("..", f"{const.dn_OUT}"), path, paths, mkdir)
+    # return __general__(os.path.join("..", f"{const.dn_OUT}/test{const.fn_cur_count}/{const.save_folder}"), path, paths, mkdir)
+    
 
 def model(path="", *paths, mkdir=True):
-    return __general__(os.path.join(".", const.dn_MODEL), path, paths, mkdir)
+    return __general__(os.path.join(".", f"{const.dn_MODEL}"), path, paths, mkdir)
+    # return __general__(os.path.join(".", f"{const.dn_MODEL}/test{const.fn_cur_count}/{const.save_folder}"), path, paths, mkdir)
 
 def __mkdir__(path):
     os.makedirs(path, exist_ok=True)

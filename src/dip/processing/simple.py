@@ -18,6 +18,13 @@ def posprocessor(image):
 
 def image_preprocessor(image):
     # image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # image = im.edges(image, threshold1=250, threshold2=200, kernel=3)
+
+    ############### use image preprocessing ################
+    # image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # image = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 8)
+    # image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
+    ########################################################
     return image
     
 def label_preprocessor(label):

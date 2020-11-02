@@ -100,10 +100,10 @@ def train():
     # q = misc.round_up(total, 100) - total
     q = total * 3
 
-    # if (const.fn_cur_count == 1):
-    #     print("Dataset augmentation (%s increase) is necessary (only once)\n" % q)
-    #     if (const.save_folder == 'not_unet_efn_IDG'):
-            # gen.augmentation(q)
+    if (const.fn_cur_count == 1):
+        print("Dataset augmentation (%s increase) is necessary (only once)\n" % q)
+        if (const.save_folder == 'not_unet_efn_IDG'):
+            gen.augmentation(q)
             # gen.augmentation()
 
     images, labels = data.fetch_from_paths([nn.dn_image, nn.dn_aug_image], [
@@ -137,7 +137,7 @@ def train():
             shuffle=True,
             generator=nn.prepare_data(images, labels),
             steps_per_epoch=steps_per_epoch,
-            epochs=1,
+            epochs=200,
             validation_steps=validation_steps,
             validation_data=nn.prepare_data(v_images, v_labels),
             use_multiprocessing=True,
@@ -145,33 +145,33 @@ def train():
         # [checkpoint, early_stopping, logger]
         val_monitor = h.history[const.MONITOR]
 
-        # test(nn)
-        # # print(h.history['val_iou'])
-        # generator = nn.prepare_data(v_images, v_labels)
-        # results = nn.model.evaluate_generator(generator, steps=1)
-        # # print("results : ", results)
+        test(nn)
+        # print(h.history['val_iou'])
+        generator = nn.prepare_data(v_images, v_labels)
+        results = nn.model.evaluate_generator(generator, steps=1)
+        # print("results : ", results)
 
-        # # visualization(iou)
-        # plt.plot(h.history['iou'])
-        # plt.plot(h.history['val_iou'])
-        # plt.title('Model val_iou')
-        # plt.xlabel('Epoch')
-        # plt.ylabel('Iou')
-        # plt.legend(['Train', 'Test'], loc='upper left')
-        # plt.savefig(f"test{const.fn_cur_count}/{const.save_folder}/{const.dn_NN}:{const.dn_ARCH}:{const.MODEL}:{const.DATASET}_iou_{const.fn_cur_count}", dpi=300)
-        # # plt.show()
-        # plt.clf()
+        # visualization(iou)
+        plt.plot(h.history['iou'])
+        plt.plot(h.history['val_iou'])
+        plt.title('Model val_iou')
+        plt.xlabel('Epoch')
+        plt.ylabel('Iou')
+        plt.legend(['Train', 'Test'], loc='upper left')
+        plt.savefig(f"test{const.fn_cur_count}/{const.save_folder}/{const.dn_NN}:{const.dn_ARCH}:{const.MODEL}:{const.DATASET}_iou_{const.fn_cur_count}", dpi=300)
+        # plt.show()
+        plt.clf()
 
-        # # 7 visualization(loss)
-        # plt.plot(h.history['loss'], color='blue')
-        # plt.plot(h.history['val_loss'], color='red')
-        # plt.title('Model val_loss')
-        # plt.xlabel('Epoch')
-        # plt.ylabel('Loss')
-        # plt.legend(['Train', 'Test'], loc='upper left')
-        # plt.savefig(f"test{const.fn_cur_count}/{const.save_folder}/{const.dn_NN}:{const.dn_ARCH}:{const.MODEL}:{const.DATASET}_loss_{const.fn_cur_count}", dpi=300)
-        # # plt.show()
-        # break
+        # 7 visualization(loss)
+        plt.plot(h.history['loss'], color='blue')
+        plt.plot(h.history['val_loss'], color='red')
+        plt.title('Model val_loss')
+        plt.xlabel('Epoch')
+        plt.ylabel('Loss')
+        plt.legend(['Train', 'Test'], loc='upper left')
+        plt.savefig(f"test{const.fn_cur_count}/{const.save_folder}/{const.dn_NN}:{const.dn_ARCH}:{const.MODEL}:{const.DATASET}_loss_{const.fn_cur_count}", dpi=300)
+        # plt.show()
+        break
 
         h_iou.append(h.history['iou'][0])
         h_val_iou.append(h.history['val_iou'][0])
@@ -189,7 +189,7 @@ def train():
         print("Finished epoch (%s) with %s: %f" %
               (loop, const.MONITOR, val_monitor))
 
-        test(nn)
+        # test(nn)
         if (abs(improve) == float("inf") or improve > const.MIN_DELTA):
             print("Improved from %f to %f" % (past_monitor, val_monitor))
             past_monitor = val_monitor
@@ -232,9 +232,8 @@ def test(nn=None):
         images = data.fetch_from_path(nn.dn_test)
         generator = nn.prepare_data(images)
 
-        while True:
-            results = nn.model.predict_generator(generator, len(images), verbose=1)
-        # nn.save_predict(images, results)
+        results = nn.model.predict_generator(generator, len(images), verbose=1)
+        nn.save_predict(images, results)
     else:
         print(">> Model not found (%s)\n" % nn.fn_checkpoint)
     

@@ -6,6 +6,8 @@ import cv2
 
 def fetch_from_path(images):
     image_list = sorted(glob(path.join(images, const.FILTER)))
+    # image_list = sorted(glob(path.join(images, '*')))
+    # print('images!', images)
     image = np.array([cv2.imread(item, 1) for item in image_list])
     return image
 

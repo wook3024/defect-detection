@@ -117,3 +117,16 @@ tolabel/
 *.h5
 *.hdf5
 *.log
+
+
+dataset/
+out/
+test/
+test*/
+model/
+UNetPlusPlus/
+
+nested+efn.py
+Nest_Net.py
+unet_efficientnet.py
+use_backbone.py

@@ -1,4 +1,7 @@
 ''' Default '''
+fn_cur_count = 7
+save_folder = 'test'
+cuda_device = 0
 DATASET = "membrane"
 IMG_PROCESSING = "simple"
 MODEL = "unet"
@@ -11,12 +14,13 @@ BACKGROUND_COLOR = [255, 120, 110]
 SEGMENTATION_COLOR = [0, 0, 255]
 
 p_VALIDATION = 0.15
+MIN_DELTA = 0
 # MIN_DELTA = 1e-5
-MIN_DELTA = 1e-10
-PATIENCE = 5
+# MIN_DELTA = 1e-10
+PATIENCE = 3
 ### Monitor: loss, acc, val_loss, val_acc
 ##my custom monitor is iou
-MONITOR = "iou"
+MONITOR = "val_loss"
 
 ''' Folder '''
 # > project level
@@ -57,5 +61,6 @@ fn_SEGMENTATION = "results.txt"
 
 # > src level
 # >> model level
+
 fn_CHECKPOINT = "checkpoint.hdf5"
 fn_LOGGER = "logger.log"
