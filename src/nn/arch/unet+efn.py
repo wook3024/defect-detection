@@ -1,7 +1,11 @@
 import efficientnet.keras as efn
 import tensorflow as tf
 tf.random.Generator = None
+<<<<<<< HEAD
 # import tensorflow_addons as tfa
+=======
+import tensorflow_addons as tfa
+>>>>>>> ae1365a80e67c67296f5c96f496887e49b4867b3
 import keras.backend as K
 import keras.callbacks as callbacks
 import numpy as np
@@ -36,7 +40,11 @@ np.random.seed(seed)
 random.seed(seed)
 os.environ['PYTHONHASHSEED'] = str(seed)
 np.random.seed(seed)
+<<<<<<< HEAD
 # tf.random.set_seed(seed)
+=======
+tf.random.set_seed(seed)
+>>>>>>> ae1365a80e67c67296f5c96f496887e49b4867b3
 
 IMAGE_SIZE = (256,256,3)
 
@@ -218,8 +226,11 @@ def model(weights_input=None):
         model.name = 'u-efficient'
         model.compile(loss='binary_crossentropy', optimizer=Adam(lr=0.0001), metrics=[iou])
 
+<<<<<<< HEAD
     # model.summary()
 
+=======
+>>>>>>> ae1365a80e67c67296f5c96f496887e49b4867b3
     if weights_input:
         #./keras_swa.model
         print("check weights_input ***", weights_input)
@@ -230,7 +241,10 @@ def model(weights_input=None):
             model.load_weights(weights_input)
             print(e)
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> ae1365a80e67c67296f5c96f496887e49b4867b3
     return model
 
 

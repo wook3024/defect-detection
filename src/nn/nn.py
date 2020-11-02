@@ -100,10 +100,17 @@ def train():
     # q = misc.round_up(total, 100) - total
     q = total * 3
 
+<<<<<<< HEAD
     # if (const.fn_cur_count == 1):
     #     print("Dataset augmentation (%s increase) is necessary (only once)\n" % q)
     #     if (const.save_folder == 'not_unet_efn_IDG'):
             # gen.augmentation(q)
+=======
+    if (const.fn_cur_count == 1):
+        print("Dataset augmentation (%s increase) is necessary (only once)\n" % q)
+        if (const.save_folder == 'not_unet_efn_IDG'):
+            gen.augmentation(q)
+>>>>>>> ae1365a80e67c67296f5c96f496887e49b4867b3
             # gen.augmentation()
 
     images, labels = data.fetch_from_paths([nn.dn_image, nn.dn_aug_image], [
@@ -137,7 +144,11 @@ def train():
             shuffle=True,
             generator=nn.prepare_data(images, labels),
             steps_per_epoch=steps_per_epoch,
+<<<<<<< HEAD
             epochs=1,
+=======
+            epochs=200,
+>>>>>>> ae1365a80e67c67296f5c96f496887e49b4867b3
             validation_steps=validation_steps,
             validation_data=nn.prepare_data(v_images, v_labels),
             use_multiprocessing=True,
@@ -145,6 +156,7 @@ def train():
         # [checkpoint, early_stopping, logger]
         val_monitor = h.history[const.MONITOR]
 
+<<<<<<< HEAD
         # test(nn)
         # # print(h.history['val_iou'])
         # generator = nn.prepare_data(v_images, v_labels)
@@ -172,6 +184,35 @@ def train():
         # plt.savefig(f"test{const.fn_cur_count}/{const.save_folder}/{const.dn_NN}:{const.dn_ARCH}:{const.MODEL}:{const.DATASET}_loss_{const.fn_cur_count}", dpi=300)
         # # plt.show()
         # break
+=======
+        test(nn)
+        # print(h.history['val_iou'])
+        generator = nn.prepare_data(v_images, v_labels)
+        results = nn.model.evaluate_generator(generator, steps=1)
+        # print("results : ", results)
+
+        # visualization(iou)
+        plt.plot(h.history['iou'])
+        plt.plot(h.history['val_iou'])
+        plt.title('Model val_iou')
+        plt.xlabel('Epoch')
+        plt.ylabel('Iou')
+        plt.legend(['Train', 'Test'], loc='upper left')
+        plt.savefig(f"test{const.fn_cur_count}/{const.save_folder}/{const.dn_NN}:{const.dn_ARCH}:{const.MODEL}:{const.DATASET}_iou_{const.fn_cur_count}", dpi=300)
+        # plt.show()
+        plt.clf()
+
+        # 7 visualization(loss)
+        plt.plot(h.history['loss'], color='blue')
+        plt.plot(h.history['val_loss'], color='red')
+        plt.title('Model val_loss')
+        plt.xlabel('Epoch')
+        plt.ylabel('Loss')
+        plt.legend(['Train', 'Test'], loc='upper left')
+        plt.savefig(f"test{const.fn_cur_count}/{const.save_folder}/{const.dn_NN}:{const.dn_ARCH}:{const.MODEL}:{const.DATASET}_loss_{const.fn_cur_count}", dpi=300)
+        # plt.show()
+        break
+>>>>>>> ae1365a80e67c67296f5c96f496887e49b4867b3
 
         h_iou.append(h.history['iou'][0])
         h_val_iou.append(h.history['val_iou'][0])
@@ -189,7 +230,11 @@ def train():
         print("Finished epoch (%s) with %s: %f" %
               (loop, const.MONITOR, val_monitor))
 
+<<<<<<< HEAD
         test(nn)
+=======
+        # test(nn)
+>>>>>>> ae1365a80e67c67296f5c96f496887e49b4867b3
         if (abs(improve) == float("inf") or improve > const.MIN_DELTA):
             print("Improved from %f to %f" % (past_monitor, val_monitor))
             past_monitor = val_monitor

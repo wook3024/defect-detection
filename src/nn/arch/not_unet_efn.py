@@ -235,7 +235,11 @@ def model(weights_input=None):
         except Exception as e:
             model.load_weights(weights_input)
             print(e)
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> ae1365a80e67c67296f5c96f496887e49b4867b3
     return model
 
 
