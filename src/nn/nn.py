@@ -488,6 +488,8 @@ def recvall(sock, count):
         count -= len(newbuf)
     return buf
 
+# vscode://vscode.github-authentication/did-authenticate?windowid=1&code=302e30b2d714a3c3f61b&state=5e67f589-e6b7-4d59-b108-9f24a2cf2e0d
+
 
 def socket_image(nn=None):
     if nn is None:
@@ -495,7 +497,7 @@ def socket_image(nn=None):
     # 통신 정보 설정
     IP = '0.0.0.0'
     PORT = 5050
-    SIZE = 480*480*3
+    SIZE = 320*240*3
     ADDR = (IP, PORT)
     encode_param=[int(cv2.IMWRITE_JPEG_QUALITY),90]
 
