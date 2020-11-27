@@ -1,11 +1,7 @@
 import efficientnet.keras as efn
 import tensorflow as tf
 tf.random.Generator = None
-<<<<<<< HEAD
 # import tensorflow_addons as tfa
-=======
-import tensorflow_addons as tfa
->>>>>>> ae1365a80e67c67296f5c96f496887e49b4867b3
 import keras.backend as K
 import keras.callbacks as callbacks
 import numpy as np
@@ -40,11 +36,7 @@ np.random.seed(seed)
 random.seed(seed)
 os.environ['PYTHONHASHSEED'] = str(seed)
 np.random.seed(seed)
-<<<<<<< HEAD
 # tf.random.set_seed(seed)
-=======
-tf.random.set_seed(seed)
->>>>>>> ae1365a80e67c67296f5c96f496887e49b4867b3
 
 IMAGE_SIZE = (256,256,3)
 
@@ -142,19 +134,25 @@ def residual_block(blockInput, num_filters=16):
 
 def model(weights_input=None):
     input_shape=IMAGE_SIZE
-    backbone_size='b0'
+    backbone_size='b4'
     pre_trained_weight='imagenet'
     dropout_rate=0.5
 
 
     if backbone_size == 'b7':
         backbone = efn.EfficientNetB7(weights=pre_trained_weight, include_top=False, input_shape=input_shape)
+        
         backbone_layer = [554, 258, 155, 52]
     elif backbone_size == 'b4':
         backbone = efn.EfficientNetB4(weights=pre_trained_weight, include_top=False, input_shape=input_shape)
-        backbone_layer = [342, 154, 92, 30]
+        # for i, layer in enumerate(backbone.layers):
+        #     print(i, layer.output)
+        backbone_layer = [320, 144, 86, 28]
     else:
         backbone = efn.EfficientNetB0(weights=pre_trained_weight, include_top=False, input_shape=input_shape)
+        # for i, layer in enumerate(backbone.layers):
+        #     print(i, layer.output)
+        # return 
         backbone_layer = [158, 72, 44, 16]
 
     input = backbone.input
@@ -224,13 +222,10 @@ def model(weights_input=None):
     with strategy.scope():  
         model = Model(input, output_layer)
         model.name = 'u-efficient'
-        model.compile(loss='binary_crossentropy', optimizer=Adam(lr=0.0001), metrics=[iou])
+        model.compile(loss='binary_crossentropy', optimizer=Adam(lr=0.0005), metrics=[iou])
 
-<<<<<<< HEAD
     # model.summary()
 
-=======
->>>>>>> ae1365a80e67c67296f5c96f496887e49b4867b3
     if weights_input:
         #./keras_swa.model
         print("check weights_input ***", weights_input)
@@ -241,10 +236,7 @@ def model(weights_input=None):
             model.load_weights(weights_input)
             print(e)
 
-<<<<<<< HEAD
     
-=======
->>>>>>> ae1365a80e67c67296f5c96f496887e49b4867b3
     return model
 
 
@@ -263,3 +255,5 @@ def prepare_output(image):
     image = np.clip(image, 0, 1)
     # print(image.shape)
     return np.multiply(image, 255)
+
+
